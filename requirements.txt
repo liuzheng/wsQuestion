@@ -1,6 +1,6 @@
-ansible (1.9.0.1)
-Django (1.8)
-jedi (0.7.0)
-Jinja2 (2.7.3)
-simplejson (3.6.5)
-tornado (4.1)
+ansible=>1.9.0.1
+Django=>1.8
+jedi=>0.7.0
+Jinja2=>2.7.3
+simplejson=>3.6.5
+tornado=>4.1
