@@ -1,0 +1,21 @@
+#!/bin/bash
+# coding: utf-8
+# Copyright (c) 2014
+# Gmail:liuzheng712
+#
+
+case "$1" in
+  start)
+    python manage.py runserver 0.0.0.0:8000 & python ws.py
+    ;;
+  stop)
+    ps aux|grep zheng|grep python|grep -e 'ws.py' -e 'manage.py'|awk '{print "kill -9 "$2}'|sh
+    ;;
+  restart)
+    ps aux|grep zheng|grep python|grep -e 'ws.py' -e 'manage.py'|awk '{print "kill -9 "$2}'|sh
+    python manage.py runserver 0.0.0.0:8000 & python ws.py
+    ;;
+  *)
+    echo "Usage: ./server {start|stop|restart}"
+    exit 1
+esac

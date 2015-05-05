@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<title>ws Question</title>
+<link rel="stylesheet" type="text/css" href="" />
+<script>
+var ws;
+function onLoad(){
+  ws = new WebSocket("ws://"+document.domain+":8001/ws");
+  ws.onmessage = function(e){
+    document.getElementById('msgs').innerHTML +="<br />"+e.data;
+  }
+}
+function sendMsg(){
+  document.getElementById('msgs').innerHTML='';
+  ws.send(document.getElementById('command').value);
+}
+</script>
+</head>
+<body onload="onLoad();">
+<h2>Command Example</h2>
+
+<p>ping localhost -c 4</p>
+<p>ansible-playbook -i hosts test.yml</p> 
+<input type="text" id="command" />
+<button id="click" onclick="sendMsg();">submit</button>
+<p id="msgs"></p>
+
+</body>
+</html>
+

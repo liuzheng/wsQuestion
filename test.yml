@@ -1,0 +1,47 @@
+---
+- hosts: localhost
+  tasks:
+  - name: hello
+    shell: uptime
+  - name: hello1
+    shell: uptime
+  - name: hello2
+    shell: uptime
+  - name: hello3
+    shell: uptime
+  - name: hello4
+    shell: uptime
+  - name: hello5
+    shell: uptime
+  - name: hello6
+    shell: uptime
+  - name: hello7
+    shell: uptime
+  - name: hello8
+    shell: uptime
+  - name: hello9
+    shell: uptime
+  - name: hello10
+    shell: uptime
+  - name: hello1
+    shell: uptime
+  - name: hello2
+    shell: uptime
+  - name: hello3
+    shell: uptime
+  - name: hello4
+    shell: uptime
+  - name: hello5
+    shell: uptime
+  - name: hello6
+    shell: uptime
+  - name: hello7
+    shell: uptime
+  - name: hello8
+    shell: uptime
+  - name: hello9
+    shell: uptime
+  - name: hello10
+    shell: uptime
+
+
