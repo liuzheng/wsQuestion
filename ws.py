@@ -32,21 +32,21 @@ class SocketHandler(tornado.websocket.WebSocketHandler):
     def on_message(self,e):
         command = e
         print command
-        stdout = sys.stdout
-        sys.stdout = file = StringIO.StringIO()
+        #stdout = sys.stdout
+        #sys.stdout = file = StringIO.StringIO()
 
         child = subprocess.Popen(command,shell=True,
-                stdout=subprocess.PIPE,bufsize=1)
-        self.write_message(file.getvalue())
-        for nextline in iter(child.stdout.readline, b''):
+                stdout=subprocess.PIPE,bufsize=0)
+       # self.write_message(file.getvalue())
+       # for nextline in iter(child.stdout.readline, b''):
+       #     self.write_message("[ "+time.strftime('%Y-%m-%d %H:%M:%S',time.localtime())+"] "+nextline)
+       # child.stdout.close()
+       # child.wait()
+        while True:
+            nextline = child.stdout.readline()
+            if nextline.strip() == "" and child.poll() != None:
+                break
             self.write_message("[ "+time.strftime('%Y-%m-%d %H:%M:%S',time.localtime())+"] "+nextline)
-        child.stdout.close()
-        child.wait()
-        #while True:
-        #    nextline = child.stderr.readline()
-        #    if nextline.strip() == "" and child.poll() != None:
-        #        break
-        #    self.write_message("[ "+time.strftime('%Y-%m-%d %H:%M:%S',time.localtime())+"] "+nextline)
 
 if __name__ == '__main__':
     app = tornado.web.Application([
