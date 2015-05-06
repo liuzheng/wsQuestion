@@ -58,6 +58,7 @@ class SocketHandler(tornado.websocket.WebSocketHandler):
     def on_message(self, e):
         command = e
         print command
+        if command.strip() == "ping -c 4 localhost":
         # stdout = sys.stdout
         #sys.stdout = file = StringIO.StringIO()
         # self.write_message(file.getvalue())
@@ -65,16 +66,21 @@ class SocketHandler(tornado.websocket.WebSocketHandler):
         #     self.write_message("[ "+time.strftime('%Y-%m-%d %H:%M:%S',time.localtime())+"] "+nextline)
         # child.stdout.close()
         # child.wait()
-        callbacks.AggregateStats.compute = self.compute
-        stats = run_playbook(
-            playbook_path='./test.yml',
-            hosts_path='./hosts',
-        )
-        # while True:
-        #     nextline = child.stdout.readline()
-        #     if nextline.strip() == "" and child.poll() != None:
-        #         break
-        #     self.write_message("[ "+time.strftime('%Y-%m-%d %H:%M:%S',time.localtime())+"] "+nextline)
+            child = subprocess.Popen(command,shell=True,stdout=subprocess.PIPE)
+            while True:
+                 nextline = child.stdout.readline()
+                 if nextline.strip() == "" and child.poll() != None:
+                     break
+                 self.write_message("[ "+time.strftime('%Y-%m-%d %H:%M:%S',time.localtime())+"] "+nextline)
+        elif command.strip() == "ansible-playbook -i hosts test.yml":
+            callbacks.AggregateStats.compute = self.compute
+            stats = run_playbook(
+                playbook_path='./test.yml',
+                hosts_path='./hosts',
+            )
+        else:
+            self.write_message("Input Error")
+
 
     def compute(self, runner_results, setup=False, poll=False, ignore_errors=False):
         ''' walk through all results and increment stats '''
